@@ -8,7 +8,7 @@ Style/Documentation:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 30
-
-Metrics/CyclomaticComplexity:
   Max: 10
+
+# Metrics/CyclomaticComplexity:
+#   Max: 10
