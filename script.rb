@@ -23,6 +23,8 @@ country. Mr. Dursley hummed as he picked out his most boring tie for
 work, and Mrs. Dursley gossiped away happily as she wrestled a screaming
 Dudley into his high chair.'.freeze
 
+  module_function
+
   def perform
     text = ''
     puts('reading file')
@@ -33,7 +35,6 @@ Dudley into his high chair.'.freeze
     puts('sorted histogram:')
     puts(HistogramGenerator.sort_histogram(histogram))
   end
-  module_function :perform
 
   def number_to_word(number)
     case number
@@ -59,7 +60,6 @@ Dudley into his high chair.'.freeze
       'oops'
     end
   end
-  module_function :number_to_word
 end
 puts App.perform
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 13_666].each do |number|
