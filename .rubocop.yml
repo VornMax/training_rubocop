@@ -9,6 +9,3 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Max: 10
-
-# Metrics/CyclomaticComplexity:
-#   Max: 10
