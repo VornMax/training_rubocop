@@ -1,6 +1,6 @@
 # class Greet
 #   def greet_meth(name)
-#     "Hello, #{name}. I’m working proc!"
+#     "Hello, #{name}. Im working proc!"
 #   end
 # end
 
