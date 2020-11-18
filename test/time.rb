@@ -17,6 +17,8 @@ class TimeConvert
 
     join_fragment(sort_middle, minutes_array, result_array)
 
+    #create_new_fragments(sort_middle, result_array)
+
     convert(result_array, output)
   end
 
