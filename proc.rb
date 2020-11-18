@@ -77,8 +77,8 @@
 
 # METHODS
 class Thing
-  def square(n)
-    n * n
+  def square(num)
+    num * num
   end
 end
 thing = Thing.new
