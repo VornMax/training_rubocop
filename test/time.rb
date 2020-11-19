@@ -9,18 +9,22 @@ class TimeConvert
 
   def convert_fragment
     minutes_array = []
-    sort_middle = []
+    @sort_middle = []
     result_array = []
     output = []
 
     hour_conversion(input, minutes_array)
 
-    join_fragment(sort_middle, minutes_array, result_array)
+    join_fragment(minutes_array)
+
+    create_new_fragments(result_array)
 
     convert(result_array, output)
   end
 
   private
+
+  attr_reader :sort_middle
 
   def hour_conversion(input, minutes_array)
     input.each do |x|
@@ -34,25 +38,25 @@ class TimeConvert
     minutes_array.sort!
   end
 
-  def join_fragment(sort_middle, minutes_array, result_array)
+  def join_fragment(minutes_array)
     minutes_array.each do |i|
-      if sort_middle.empty?
-        sort_middle << i
-      elsif sort_middle[-1][1] >= i[0]
-        sort_middle = sort_middle[0..-2] + [[sort_middle[-1][0], i[1]]] if sort_middle[-1][1] < i[1]
+      if @sort_middle.empty?
+        @sort_middle << i
+      elsif @sort_middle[-1][1] >= i[0]
+        @sort_middle = @sort_middle[0..-2] + [[@sort_middle[-1][0], i[1]]] if @sort_middle[-1][1] < i[1]
       else
-        sort_middle << i
+        @sort_middle << i
       end
     end
-    create_new_fragments(sort_middle, result_array)
+    @sort_middle
   end
 
-  def create_new_fragments(sort_middle, result_array)
+  def create_new_fragments(result_array)
     first_minute = 0
     last_minute = 1439
-    result_array << [sort_middle[0][1], sort_middle[1][0]]
-    result_array << [first_minute, sort_middle[0][0]]
-    result_array << [sort_middle[1][1], last_minute]
+    result_array << [@sort_middle[0][1], @sort_middle[1][0]]
+    result_array << [first_minute, @sort_middle[0][0]]
+    result_array << [@sort_middle[1][1], last_minute]
     result_array.sort!
   end
 
