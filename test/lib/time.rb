@@ -1,6 +1,5 @@
 class TimeConvert
   require 'date'
-
   attr_reader :input
 
   def convert_fragment(input)

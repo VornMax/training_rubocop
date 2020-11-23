@@ -1,5 +1,4 @@
 require 'rspec'
-
 require_relative '../lib/time.rb'
 
 describe TimeConvert do
