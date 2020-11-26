@@ -1,21 +1,24 @@
+# frozen_string_literal: true
+
+# Class for convert time section in periods.
 class TimeConvert
   require 'date'
 
   attr_reader :input
 
   def convert_fragment(input)
-    minutes_array = []
+    minutes_arr = []
     @sort_middle = []
     result_array = []
     output = []
 
     check_input(input)
 
-    hour_conversion(input, minutes_array)
+    hour_conversion(input, minutes_arr)
 
-    delete_inner_sector(minutes_array) if input.length > 1
+    delete_inner_sector(minutes_arr) if input.length > 1
 
-    join_fragment(minutes_array)
+    join_fragment(minutes_arr)
 
     create_new_fragments(result_array, input)
 
@@ -27,26 +30,26 @@ class TimeConvert
   attr_reader :sort_middle
 
   def check_input(input)
-    mistakes = [nil, [], '', [''], ' ']
+    mistakes = [' ', [['']]]
     mistakes.each do |mistake|
-      abort 'Uncorrect input!' if input == mistake
+      raise(ArgumentError) if input == mistake || input.nil? || input.empty?
     end
   end
 
-  def hour_conversion(input, minutes_array)
+  def hour_conversion(input, minutes_arr)
     input.each do |x|
       result = []
       x.each do |i|
         d = DateTime.parse(i)
         result << d.hour * 60 + d.minute
       end
-      minutes_array << result
+      minutes_arr << result
     end
-    minutes_array.sort!
+    minutes_arr.sort!
   end
 
-  def join_fragment(minutes_array)
-    minutes_array.each do |i|
+  def join_fragment(minutes_arr)
+    minutes_arr.each do |i|
       if @sort_middle.empty?
         @sort_middle << i
       elsif @sort_middle[-1][1] >= i[0]
@@ -82,15 +85,17 @@ class TimeConvert
     "#{hours}:#{rest}"
   end
 
-  def delete_inner_sector(minutes_array)
-    (0..minutes_array.length).each do |i|
-      (0..1).each do |j|
-        if minutes_array[i][j + 1] >= minutes_array[i + 1][j + 1] && minutes_array[i][j] <= minutes_array[i + 1][j]
-          minutes_array.delete_at(1)
-          return minutes_array
-        else
-          return minutes_array
-        end
+  def inner_sections?(minutes_arr, arr, time)
+    minutes_arr[arr][time + 1] >= minutes_arr[arr + 1][time + 1] && minutes_arr[arr][time] <= minutes_arr[arr + 1][time]
+  end
+
+  def delete_inner_sector(minutes_arr)
+    (0..minutes_arr.length).each do |arr|
+      (0..1).each do |time|
+        return minutes_arr unless inner_sections?(minutes_arr, arr, time)
+
+        minutes_arr.delete_at(1)
+        return minutes_arr
       end
     end
   end
