@@ -20,7 +20,7 @@ class TimeConvert
 
     join_fragment(minutes_arr)
 
-    create_new_fragments(result_array, input)
+    create_new_fragments(result_array)
 
     convert(result_array, output)
   end
@@ -61,16 +61,16 @@ class TimeConvert
     @sort_middle
   end
 
-  def create_new_fragments(result_array, input)
+  def create_new_fragments(result_array)
     first_minute = 0
     last_minute = 1439
     result_array << [@sort_middle[0][1], last_minute] if @sort_middle.length <= 1
-    if_more_two_fragments(result_array, input, last_minute)
+    if_more_two_fragments(result_array, last_minute)
     result_array << [first_minute, @sort_middle[0][0]]
     result_array.sort!
   end
 
-  def if_more_two_fragments(result_array, _input, last_minute)
+  def if_more_two_fragments(result_array, last_minute)
     return unless @sort_middle.length >= 2
 
     result_array << [@sort_middle[0][1], @sort_middle[1][0]]
