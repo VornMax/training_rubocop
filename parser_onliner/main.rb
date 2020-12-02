@@ -17,10 +17,10 @@ CSV.open('news.csv', 'wb') do |csv|
     next if url.include? 'forum'
 
     article = open(url).read
-    news_doc = Nokogiri::HTML(article)
-    title = news_doc.css('div.news-header__title').text.strip,
-            image_link = news_doc.css('div.news-header__image')[0]['style'].sub('background-image: url(', '').sub(/\)\;/, ''),
-            text = news_doc.css('div.news-text p').text.slice(0..200)
-    csv << [title, image_link, text]
+    doc = Nokogiri::HTML(article)
+    title = doc.css('div.news-header__title').text.strip
+    img = doc.css('div.news-header__image')[0]['style'].sub('background-image: url(', '').sub(/\)\;/, '')
+    text = doc.css('div.news-text p').text.slice(0..200)
+    csv << [title, img, text]
   end
 end
