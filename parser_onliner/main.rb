@@ -17,7 +17,9 @@ document.css('a.b-teasers-2__teaser-i').each do |link|
   news_doc = Nokogiri::HTML(article)
 
   news_hash = {
-    title: news_doc.css('div.news-header__title').text.strip
+    title: news_doc.css('div.news-header__title').text.strip,
+    image_link: news_doc.css('div.news-header__image')[0]['style'].sub('background-image: url(', '').sub(/\)\;/, ''),
+    text: news_doc.css('div.news-text p').text.slice(0..200)
   }
   array << news_hash
 end
