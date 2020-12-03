@@ -7,11 +7,14 @@ class TimeConvert
   attr_reader :input
 
   def time_convert(input)
-    mistakes = [' ', [['']]]
-    mistakes.each do |mistake|
-      return 'Uncorrect input' if input == mistake || input.nil? || input.empty?
-      # return 'Uncorrect' unless input.scan(/\['[0-9]{2}:[0-9]{2}',\s'[0-9]{2}:[0-9]{2}'\]/)
+    return 'Uncorrect input' if input.class != Array || input.nil? || input.empty?
+
+    (0..input.length - 1).each do |arr|
+      (0..1).each do |item|
+        return 'Uncorrect input' if input[arr][item].class != String
+      end
     end
+
     convert_fragment(input)
   end
 
@@ -38,10 +41,11 @@ class TimeConvert
 
   def hour_conversion(input, minutes_arr)
     input.each do |x|
+      minutes = 60
       result = []
       x.each do |i|
         d = DateTime.parse(i)
-        result << d.hour * 60 + d.minute
+        result << d.hour * minutes + d.minute
       end
       minutes_arr << result
     end
@@ -78,21 +82,21 @@ class TimeConvert
   end
 
   def minutes_conversion(minutes)
-    hours = minutes / 60
-    rest = minutes % 60
+    one_hour = 60
+    hours = minutes / one_hour
+    rest = minutes % one_hour
     hours = '00' if hours.zero?
     rest = '00' if rest.zero?
     "#{hours}:#{rest}"
   end
 
   def inner_sections?(minutes_arr, arr, time)
-    i = 1 # this variable to increase array variable
-    minutes_arr[arr][time + i] >= minutes_arr[arr + i][time + i] && minutes_arr[arr][time] <= minutes_arr[arr + i][time]
+    minutes_arr[arr][time + 1] >= minutes_arr[arr + 1][time + 1] && minutes_arr[arr][time] <= minutes_arr[arr + 1][time]
   end
 
   def delete_inner_sector(minutes_arr)
     (0..minutes_arr.length).each do |arr|
-      (0..1).each do |time|
+      (0..minutes_arr.length).each do |time|
         return minutes_arr unless inner_sections?(minutes_arr, arr, time)
 
         minutes_arr.delete_at(1)
@@ -112,3 +116,8 @@ class TimeConvert
     output
   end
 end
+
+# input = [['blabla'], ['blabla']]
+# # input = [['10:00', '13:20'], ['11:00', '12:00']]
+# tc = TimeConvert.new
+# p tc.time_convert(input)

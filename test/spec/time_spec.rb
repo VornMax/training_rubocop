@@ -53,7 +53,7 @@ describe TimeConvert do
   context 'when uncorrect input' do
     let(:tc) { TimeConvert.new }
     it 'enters invalid values' do
-      mistakes = [nil, ' ', ' ', [['']]]
+      mistakes = [nil, ' ', [], {}, 'blabla', [['blabla'], ['blabla']], [['']], [[['']]], [[[['']]]], [[[[['']]]]]]
       output = 'Uncorrect input'
 
       mistakes.each do |mistake|
