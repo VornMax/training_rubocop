@@ -6,13 +6,20 @@ class TimeConvert
 
   attr_reader :input
 
+  def time_convert(input)
+    mistakes = [' ', [['']]]
+    mistakes.each do |mistake|
+      return 'Uncorrect input' if input == mistake || input.nil? || input.empty?
+      # return 'Uncorrect' unless input.scan(/\['[0-9]{2}:[0-9]{2}',\s'[0-9]{2}:[0-9]{2}'\]/)
+    end
+    convert_fragment(input)
+  end
+
   def convert_fragment(input)
     minutes_arr = []
     @sort_middle = []
     result_array = []
     output = []
-
-    check_input(input)
 
     hour_conversion(input, minutes_arr)
 
@@ -28,13 +35,6 @@ class TimeConvert
   private
 
   attr_reader :sort_middle
-
-  def check_input(input)
-    mistakes = [' ', [['']]]
-    mistakes.each do |mistake|
-      raise(ArgumentError) if input == mistake || input.nil? || input.empty?
-    end
-  end
 
   def hour_conversion(input, minutes_arr)
     input.each do |x|
@@ -86,7 +86,8 @@ class TimeConvert
   end
 
   def inner_sections?(minutes_arr, arr, time)
-    minutes_arr[arr][time + 1] >= minutes_arr[arr + 1][time + 1] && minutes_arr[arr][time] <= minutes_arr[arr + 1][time]
+    i = 1 # this variable to increase array variable
+    minutes_arr[arr][time + i] >= minutes_arr[arr + i][time + i] && minutes_arr[arr][time] <= minutes_arr[arr + i][time]
   end
 
   def delete_inner_sector(minutes_arr)
