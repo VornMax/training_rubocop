@@ -1,22 +1,27 @@
 require_relative 'human'
+require_relative 'pet'
+require_relative 'job'
 
 RSpec.describe 'Human' do
-  it 'feeds a dog' do
-    name = double('Joe')
+  let(:human) { double('human') }
 
-    allow(name).to receive(:feed_pet).with('Dog')
+  # let(:job) { described_class.new(human) }
+
+  it 'feeds a dog' do
+    allow(human).to receive(:feed).with('meat')
     # mock
 
-    ih = Human.new(name)
-    ih.feed_pet('Dog')
+    ih = Human.new
+    ih.feed_pet
   end
 
   it 'gets a salary' do
-    salary = Human.new('Joe')
-
-    allow(salary).to receive(:receive_salary).and_return(salary)
+    allow(human).to receive(:work).and_return('salary')
     # stub
 
-    expect(salary.receive_salary).to eq(salary)
+    expect(human.work).to eq('salary')
+
+    ih = Human.new
+    ih.work
   end
 end

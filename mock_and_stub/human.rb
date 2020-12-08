@@ -1,13 +1,12 @@
+require_relative 'pet'
+require_relative 'job'
+
 class Human
-  def initialize(name)
-    @name = name
+  def feed_pet
+    Pet.feed('meat')
   end
 
-  def feed_pet(pet)
-    @name.feed_pet(pet)
-  end
-
-  def receive_salary
-    # salary
+  def work
+    Job.receive_salary
   end
 end
