@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'human'
 require_relative 'pet'
 require_relative 'job'
