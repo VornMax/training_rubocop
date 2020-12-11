@@ -5,8 +5,6 @@ require_relative 'job'
 RSpec.describe 'Human' do
   let(:human) { double('human') }
 
-  # let(:job) { described_class.new(human) }
-
   it 'feeds a dog' do
     allow(human).to receive(:feed).with('meat')
     # mock
